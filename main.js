@@ -62,13 +62,13 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
         })
     }
     
-    function renderContainerMovies(movie){
+    function renderMovies(movie){
         return(
                 `
                     <div id="getmovies" align="center">
                         <label><h2>Movies at the Dendy</h2></label>
                         <p>261-263 King St, Newtown</p>
-                        <button id="button" class="btn"> "Now Showing" ${data.renderContainerMovies} </button>
+                        <button id="button" class="btn"> "Now Showing" ${data.renderMovies} </button>
                     </div>
                 `
         )
@@ -79,8 +79,8 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
     	/*if*/
         return into.innerHTML = `
             <ul class="list-unstyled">
-                    ${state.movies((movies)=>{
-                    return renderContainerMovies(movie)
+                    ${state.movies.movies((movies)=>{
+                    return renderMovies(movie)
                     }).join('')}
             </ul>
          `
@@ -91,7 +91,7 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
                 `<li> ${movie.title} <span> ${movie.sessions} </span></li>`
             )
             }
-        } 
+         
 
     /*EXECUTION*/
     getMovies();
