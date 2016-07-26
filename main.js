@@ -61,12 +61,7 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
             //renderMovies(state/*, into*/);
         })
     }
-    /*firebase.database().ref('tasks/').set({
-        abc123: {
-            title: 'Overwrite data',
-            done: true
-        }
-    });*/
+    
     function renderContainerMovies(movie){
         return(
                 `
