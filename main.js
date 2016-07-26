@@ -67,17 +67,36 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
             done: true
         }
     });*/
-    function renderMovies(state, into) {
+    function renderContainerMovies(movie){
+        return(
+                `
+                    <div id="getmovies" align="center">
+                        <label><h2>Movies at the Dendy</h2></label>
+                        <p>261-263 King St, Newtown</p>
+                        <button id="button" class="btn"> "Now Showing" ${data.renderContainerMovies} </button>
+                    </div>
+                `
+        )
 
-        console.log(state);
-        /*stat.movies.movie.foreach*/
-
-
-        // return into.innerHTML = `
-        //     <div id="getmovies">${data.getmovies}<button>${data}</button></div>
-        //     <div id="results">${data.results}</div>
-        // `
-    } 
+    }
+  
+    function renderMovies (state, into){
+    	/*if*/
+        return into.innerHTML = `
+            <ul class="list-unstyled">
+                    ${state.movies((movies)=>{
+                    return renderContainerMovies(movie)
+                    }).join('')}
+            </ul>
+         `
+        }
+  
+    function renderMovie(movie) {
+            return(
+                `<li> ${movie.title} <span> ${movie.sessions} </span></li>`
+            )
+            }
+        } 
 
     /*EXECUTION*/
     getMovies();
