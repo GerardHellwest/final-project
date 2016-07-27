@@ -45,8 +45,9 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
         }).then((dataAsJson) => {
             var movies = []
 
-            dataAsJson.feed.entry.forEach((entry)=>{
+            dataAsJson.feed.entry.forEach((entry, index)=>{
                 var  movie = {}
+                movie.id = index,
                 movie.title = entry.gsx$titles.$t,
                 movie.rating = entry.gsx$rating.$t,
                 movie.duration = entry.gsx$duration.$t,
@@ -61,26 +62,21 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
             //renderMovies(state/*, into*/);
         })
     }
-    
-    function renderMovies(movie){
-        return(
-                `
-                    <div id="getmovies" align="center">
-                        <label><h2>Movies at the Dendy</h2></label>
-                        <p>261-263 King St, Newtown</p>
-                        <button id="button" class="btn"> "Now Showing" ${data.renderMovies} </button>
-                    </div>
-                `
-        )
 
-    }
-  
     function renderMovies (state, into){
-    	/*if*/
+
         return into.innerHTML = `
+        <div id="getmovies" align="center">
+                        <h2>Movies at the Dendy</h2>
+                        <h3>Now Showing</h3>
+                        <p>261-263 King St, Newtown</p>
+                        
+                    </div>
             <ul class="list-unstyled">
-                    ${state.movies.movies((movies)=>{
-                    return renderMovies(movie)
+                    ${state.movies.movies.map((movie)=>{
+                        if (!movie.seen){
+                            return renderMovie(movie)
+                        }
                     }).join('')}
             </ul>
          `
@@ -88,17 +84,22 @@ https://docs.google.com/spreadsheets/d/1vC-VXQwd9mRI5fs2yPBRd3HM3jrEfwbUC0HRAOoQ
   
     function renderMovie(movie) {
             return(
-                `<li> ${movie.title} <span> ${movie.sessions} </span></li>`
+                `<li data-id="${movie.id}"> ${movie.title} <span> ${movie.sessions} </span><span class="remove-movie"> X </span></li>`
             )
-            }
-         
+         }
+     function removeMovie(event) {
+         var elem = closest(event.delegateTarget, '[data-id]')
+         var id = elem.attributes[0].value
+
+        firebase.database().ref('movies/movies/'+id).update({
+            seen: true
+        });
+     }    
 
     /*EXECUTION*/
     getMovies();
 
+    delegate('body','click','.remove-movie', removeMovie)
+
 })() //endof iffe
 
-
-
-/*delegate('#container', 'click', 'button', () => {  }
-    render(state, container) })*/
